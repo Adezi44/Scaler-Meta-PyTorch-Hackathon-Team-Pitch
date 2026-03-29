@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Why drug discovery — our hackathon pitch</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@400;500&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0a0e0c; --bg2: #111712; --bg3: #182019;
+    --accent: #4ade80; --accent2: #86efac;
+    --accent-dim: rgba(74,222,128,0.10); --accent-border: rgba(74,222,128,0.22);
+    --text: #e8f0e9; --text2: #8fa892; --text3: #4a6152;
+    --coral: #fb7c5a; --amber: #fbbf24; --blue: #60a5fa;
+    --border: rgba(255,255,255,0.07);
+    --font-display: 'DM Serif Display', Georgia, serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font-body); font-size: 16px; line-height: 1.7; font-weight: 300; min-height: 100vh; }
+  body::before { content: ''; position: fixed; inset: 0; background-image: linear-gradient(rgba(74,222,128,0.025) 1px, transparent 1px), linear-gradient(90deg, rgba(74,222,128,0.025) 1px, transparent 1px); background-size: 48px 48px; pointer-events: none; z-index: 0; }
+  .container { max-width: 760px; margin: 0 auto; padding: 0 28px; position: relative; z-index: 1; }
+
+  /* HEADER */
+  header { padding: 72px 0 56px; border-bottom: 1px solid var(--border); }
+  .eyebrow { font-family: var(--font-mono); font-size: 11px; font-weight: 500; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; margin-bottom: 20px; display: flex; align-items: center; gap: 10px; }
+  .eyebrow::before { content: ''; display: inline-block; width: 24px; height: 1px; background: var(--accent); }
+  h1 { font-family: var(--font-display); font-size: clamp(34px, 6vw, 54px); line-height: 1.1; color: var(--text); margin-bottom: 20px; font-weight: 400; }
+  h1 em { color: var(--accent); font-style: italic; }
+  .subtitle { font-size: 17px; color: var(--text2); max-width: 560px; line-height: 1.65; }
+
+  /* SECTIONS */
+  section { padding: 52px 0; border-bottom: 1px solid var(--border); }
+  .section-label { font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.14em; color: var(--text3); text-transform: uppercase; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+  .section-label::after { content: ''; flex: 1; height: 1px; background: var(--border); }
+  h2 { font-family: var(--font-display); font-size: 27px; font-weight: 400; color: var(--text); margin-bottom: 16px; line-height: 1.25; }
+  p { color: var(--text2); margin-bottom: 14px; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--text); font-weight: 500; }
+  code { font-family: var(--font-mono); font-size: 13px; background: var(--bg3); color: var(--accent); padding: 1px 6px; border-radius: 4px; }
+
+  /* ANALOGY */
+  .analogy { background: var(--accent-dim); border: 1px solid var(--accent-border); border-radius: 12px; padding: 26px 30px; margin: 28px 0; }
+  .analogy-label { font-family: var(--font-mono); font-size: 10px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; }
+  .analogy p { color: var(--accent2); font-size: 16px; line-height: 1.6; margin: 0; }
+
+  /* PIPELINE */
+  .pipeline { display: flex; align-items: stretch; margin: 28px 0; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; }
+  .pipe-step { flex: 1; padding: 18px 14px; text-align: center; background: var(--bg2); position: relative; }
+  .pipe-step.highlighted { background: var(--accent-dim); border-left: 1px solid var(--accent-border); border-right: 1px solid var(--accent-border); }
+  .pipe-step + .pipe-step::before { content: '→'; position: absolute; left: -9px; top: 50%; transform: translateY(-50%); color: var(--text3); font-size: 11px; z-index: 2; }
+  .pipe-step.highlighted + .pipe-step::before { color: var(--accent); }
+  .pipe-title { font-family: var(--font-mono); font-size: 10px; font-weight: 500; color: var(--text3); margin-bottom: 5px; letter-spacing: 0.05em; }
+  .pipe-step.highlighted .pipe-title { color: var(--accent); }
+  .pipe-name { font-size: 12px; font-weight: 500; color: var(--text2); line-height: 1.3; }
+  .pipe-step.highlighted .pipe-name { color: var(--text); }
+
+  /* TASKS */
+  .tasks { display: flex; flex-direction: column; gap: 10px; margin: 24px 0; }
+  .task { display: flex; gap: 14px; align-items: flex-start; padding: 18px 20px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg2); }
+  .task-badge { font-family: var(--font-mono); font-size: 10px; font-weight: 500; padding: 3px 9px; border-radius: 20px; white-space: nowrap; margin-top: 2px; flex-shrink: 0; }
+  .badge-easy   { background: rgba(74,222,128,0.14); color: #4ade80; }
+  .badge-medium { background: rgba(251,191,36,0.14); color: #fbbf24; }
+  .badge-hard   { background: rgba(251,124,90,0.14); color: #fb7c5a; }
+  .task-content h4 { font-size: 14px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .task-content p { font-size: 13px; color: var(--text2); margin: 0; line-height: 1.5; }
+
+  /* STACK */
+  .stack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 24px 0; }
+  .stack-item { padding: 16px 18px; border: 1px solid var(--border); border-radius: 10px; background: var(--bg2); }
+  .stack-item .lib { font-family: var(--font-mono); font-size: 13px; font-weight: 500; color: var(--accent); margin-bottom: 4px; }
+  .stack-item .lib-desc { font-size: 12px; color: var(--text3); line-height: 1.4; }
+
+  /* COMPARISON */
+  .compare { width: 100%; border-collapse: collapse; margin: 24px 0; font-size: 13px; }
+  .compare th { text-align: left; padding: 10px 14px; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.08em; color: var(--text3); text-transform: uppercase; border-bottom: 1px solid var(--border); }
+  .compare td { padding: 12px 14px; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: middle; }
+  .compare tr.our-pick td { background: var(--accent-dim); color: var(--text); }
+  .compare tr.our-pick td:first-child { color: var(--accent); font-weight: 500; border-left: 2px solid var(--accent); }
+  .pip { display: inline-flex; gap: 3px; }
+  .pip span { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.1); }
+  .pip.green span.f { background: #4ade80; }
+  .pip.amber span.f { background: #fbbf24; }
+  .pip.blue  span.f { background: #60a5fa; }
+  .pip.coral span.f { background: #fb7c5a; }
+
+  /* OBJECTIONS */
+  .objections { display: flex; flex-direction: column; gap: 14px; margin: 24px 0; }
+  .objection { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; }
+  .obj-q { padding: 13px 16px; background: var(--bg3); font-size: 13px; font-weight: 500; color: var(--text2); display: flex; gap: 10px; align-items: flex-start; }
+  .obj-q::before { content: 'Q'; font-family: var(--font-mono); font-size: 10px; background: rgba(255,255,255,0.08); color: var(--text3); padding: 1px 6px; border-radius: 4px; margin-top: 1px; flex-shrink: 0; }
+  .obj-a { padding: 13px 16px; font-size: 13px; color: var(--text2); display: flex; gap: 10px; align-items: flex-start; line-height: 1.55; }
+  .obj-a::before { content: 'A'; font-family: var(--font-mono); font-size: 10px; background: var(--accent-dim); color: var(--accent); padding: 1px 6px; border-radius: 4px; margin-top: 1px; flex-shrink: 0; }
+
+  /* CLOSING */
+  .pitch-line { background: var(--bg2); border: 1px solid var(--accent-border); border-radius: 12px; padding: 32px; margin: 28px 0; position: relative; overflow: hidden; }
+  .pitch-line::before { content: '"'; font-family: var(--font-display); font-size: 110px; color: rgba(74,222,128,0.08); position: absolute; top: -20px; left: 14px; line-height: 1; pointer-events: none; }
+  .pitch-line p { font-family: var(--font-display); font-size: 19px; color: var(--text); line-height: 1.5; font-style: italic; margin: 0; position: relative; z-index: 1; }
+
+  /* FOOTER */
+  footer { padding: 36px 0 56px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+  .footer-tag { font-family: var(--font-mono); font-size: 11px; color: var(--text3); letter-spacing: 0.08em; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+  header { animation: fadeUp 0.5s ease both; }
+  section:nth-of-type(1) { animation: fadeUp 0.5s 0.05s ease both; }
+  section:nth-of-type(2) { animation: fadeUp 0.5s 0.10s ease both; }
+  section:nth-of-type(3) { animation: fadeUp 0.5s 0.15s ease both; }
+  section:nth-of-type(4) { animation: fadeUp 0.5s 0.20s ease both; }
+  section:nth-of-type(5) { animation: fadeUp 0.5s 0.25s ease both; }
+  section:nth-of-type(6) { animation: fadeUp 0.5s 0.30s ease both; }
+  section:nth-of-type(7) { animation: fadeUp 0.5s 0.35s ease both; }
+
+  @media (max-width: 560px) {
+    .pipeline { flex-direction: column; }
+    .pipe-step + .pipe-step::before { content: '↓'; left: 50%; top: -9px; transform: translateX(-50%); }
+    .stack-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header>
+    <div class="eyebrow">Scaler × Meta × PyTorch Hackathon — Team Pitch</div>
+    <h1>Let's build a drug<br>discovery <em>simulator.</em></h1>
+    <p class="subtitle">Here's why this is the strongest OpenEnv idea we can build — and why we can actually pull it off.</p>
+  </header>
+
+  <section>
+    <div class="section-label">01 — The core idea</div>
+    <h2>We're not discovering drugs.<br>We're building the gym.</h2>
+    <p>Drug discovery is the process of finding a molecule that fits a disease-causing protein — like finding a key for a specific lock. There are <strong>10⁶⁰ possible drug-like molecules</strong> — more than atoms in the universe — so you can't brute-force it. You need an AI agent that learns to navigate that space intelligently.</p>
+    <p>Our environment simulates exactly that search loop. An agent proposes a molecule, our env scores it (does it bind? is it safe? can it be synthesized?), and the agent refines. This maps perfectly onto the OpenEnv <code>step() / reset() / state()</code> loop.</p>
+    <div class="analogy">
+      <div class="analogy-label">The clearest analogy</div>
+      <p>We're not building a real aircraft. We're building a <strong>flight simulator</strong> — realistic controls, realistic physics, real feedback. Pilots learn to fly in simulators. Agents will learn drug discovery in ours.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">02 — Where we fit in the pipeline</div>
+    <h2>AlphaFold solved the protein shape.<br>We tackle what comes next.</h2>
+    <p>A lot of people hear "drug discovery AI" and think of AlphaFold. But AlphaFold only predicts the <em>shape</em> of the protein — not the drug. We operate in the step that comes after it, which remains a wide-open problem.</p>
+    <div class="pipeline">
+      <div class="pipe-step">
+        <div class="pipe-title">Input</div>
+        <div class="pipe-name">Amino acid sequence</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-title">Solved — AlphaFold</div>
+        <div class="pipe-name">Protein 3D shape predicted</div>
+      </div>
+      <div class="pipe-step highlighted">
+        <div class="pipe-title">Us — open problem</div>
+        <div class="pipe-name">Agent finds the drug molecule</div>
+      </div>
+      <div class="pipe-step">
+        <div class="pipe-title">Later</div>
+        <div class="pipe-name">Clinical trials</div>
+      </div>
+    </div>
+    <p>AlphaFold is actually an <strong>input</strong> to our environment — we can use its predicted structures as protein pocket descriptions for our hardest task. Companies like Isomorphic Labs (DeepMind's own spin-off) are spending hundreds of millions on exactly our step.</p>
+  </section>
+
+  <section>
+    <div class="section-label">03 — The three tasks</div>
+    <h2>Easy → medium → hard.<br>All objectively gradable.</h2>
+    <p>The OpenEnv spec requires minimum 3 tasks with graders scoring 0.0–1.0. Here's our task ladder — each has a concrete, automatic grader, no manual review needed.</p>
+    <div class="tasks">
+      <div class="task">
+        <span class="task-badge badge-easy">Easy</span>
+        <div class="task-content">
+          <h4>Lead optimization</h4>
+          <p>Agent gets a near-perfect molecule. Tweak it to push binding affinity from ~200 nM to below 50 nM without breaking drug-likeness. Grader: affinity score + QED score.</p>
+        </div>
+      </div>
+      <div class="task">
+        <span class="task-badge badge-medium">Medium</span>
+        <div class="task-content">
+          <h4>Scaffold hopping</h4>
+          <p>Agent gets a potent molecule with a toxicity flag. Find a structurally different molecule that retains potency but clears toxicity. Grader: toxicity cleared + affinity within 5×.</p>
+        </div>
+      </div>
+      <div class="task">
+        <span class="task-badge badge-hard">Hard</span>
+        <div class="task-content">
+          <h4>De novo design</h4>
+          <p>Only the protein pocket is given. Agent designs from scratch in 15 iterations, balancing potency, selectivity, solubility, and synthesizability. Grader: composite score across all four axes.</p>
+        </div>
+      </div>
+    </div>
+    <p>All graders run automatically using open-source tools. Scores are fully deterministic — no ambiguity.</p>
+  </section>
+
+  <section>
+    <div class="section-label">04 — What we actually build</div>
+    <h2>Three pip installs.<br>No wet lab required.</h2>
+    <p>The entire environment runs on open-source tools within the 2 vCPU / 8GB RAM constraint. The chemistry complexity is hidden inside libraries — we just call functions and get scores back.</p>
+    <div class="stack-grid">
+      <div class="stack-item">
+        <div class="lib">rdkit</div>
+        <div class="lib-desc">Validates molecules, computes QED (drug-likeness) and SA (synthesizability) scores. Industry standard, CPU-only.</div>
+      </div>
+      <div class="stack-item">
+        <div class="lib">GNN binding proxy</div>
+        <div class="lib-desc">Lightweight pretrained graph neural net from ChEMBL data. Approximates binding affinity in milliseconds.</div>
+      </div>
+      <div class="stack-item">
+        <div class="lib">ChEMBL dataset</div>
+        <div class="lib-desc">2M+ molecules with real experimental data. Our proxy scores are grounded in actual science.</div>
+      </div>
+      <div class="stack-item">
+        <div class="lib">pydantic + FastAPI</div>
+        <div class="lib-desc">Typed models and REST endpoints for OpenEnv spec compliance: step(), reset(), state().</div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-label">05 — Why not other ideas</div>
+    <h2>Head-to-head against<br>the alternatives.</h2>
+    <table class="compare">
+      <thead>
+        <tr>
+          <th>Idea</th>
+          <th>Judge impact</th>
+          <th>Grader clarity</th>
+          <th>Stands out?</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="our-pick">
+          <td>💊 Drug discovery</td>
+          <td><span class="pip green"><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span></span></td>
+          <td><span class="pip green"><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span></span></span></td>
+          <td>Very few teams</td>
+        </tr>
+        <tr>
+          <td>⚙️ Predictive maintenance</td>
+          <td><span class="pip amber"><span class="f"></span><span class="f"></span><span class="f"></span><span></span><span></span></span></td>
+          <td><span class="pip amber"><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span></span></td>
+          <td>Dozens of teams will try this</td>
+        </tr>
+        <tr>
+          <td>🔥 Wildfire response</td>
+          <td><span class="pip blue"><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span></span></span></td>
+          <td><span class="pip blue"><span class="f"></span><span class="f"></span><span class="f"></span><span></span><span></span></span></td>
+          <td>Grader hard to define well</td>
+        </tr>
+        <tr>
+          <td>🏗️ Structural monitoring</td>
+          <td><span class="pip coral"><span class="f"></span><span class="f"></span><span class="f"></span><span></span><span></span></span></td>
+          <td><span class="pip coral"><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span><span class="f"></span></span></td>
+          <td>Low presentation drama</td>
+        </tr>
+      </tbody>
+    </table>
+    <p>Drug discovery is the only idea that scores top-tier on <strong>both</strong> judge wow factor and scientific credibility. Predictive maintenance is easier — but we won't stand out among 20,000 teams.</p>
+  </section>
+
+  <section>
+    <div class="section-label">06 — Handling the hard questions</div>
+    <h2>Every objection,<br>answered.</h2>
+    <div class="objections">
+      <div class="objection">
+        <div class="obj-q">How is this different from what DeepMind does?</div>
+        <div class="obj-a">DeepMind is trying to discover actual drugs. We're building the training environment where agents learn medicinal chemistry reasoning. AlphaFold solved protein structure — the molecule design step is still open. That's our space.</div>
+      </div>
+      <div class="objection">
+        <div class="obj-q">Do we need a biology or chemistry background to build this?</div>
+        <div class="obj-a">No. The chemistry lives inside RDKit — we call .score(smiles) and get a number. The environment is Python classes, FastAPI endpoints, and JSON. We're engineers building a simulation, not scientists running experiments.</div>
+      </div>
+      <div class="objection">
+        <div class="obj-q">Are the grader scores scientifically valid?</div>
+        <div class="obj-a">Yes. QED was published in Nature Chemistry. SA score came from Novartis researchers. The GNN proxy is trained on real ChEMBL experimental data. These aren't toy metrics — they're used in actual drug programs.</div>
+      </div>
+      <div class="objection">
+        <div class="obj-q">Will it run under 20 minutes on 2 vCPU / 8GB RAM?</div>
+        <div class="obj-a">Easily. RDKit is CPU-only and extremely fast — each molecule evaluation takes under 100ms. Even the hard task with 15 iterations completes in under a minute. The inference script will finish in minutes, not hours.</div>
+      </div>
+    </div>
+  </section>
+
+  <section style="border-bottom: none;">
+    <div class="section-label">07 — The one-liner</div>
+    <h2>If judges ask what we built<br>in one sentence.</h2>
+    <div class="pitch-line">
+      <p>We built a flight simulator for drug discovery AI — where an agent learns to navigate 10⁶⁰ molecules using proxy models grounded in real experimental data, with three objectively graded tasks from lead optimization to de novo design.</p>
+    </div>
+    <p>This is a <strong>genuinely novel environment</strong> in a domain with trillion-dollar real-world stakes, built with tools that run on a laptop, graded with peer-reviewed metrics, and differentiated from every sensor-based or game-like submission in the pool.</p>
+    <p>Let's build it.</p>
+  </section>
+
+  <footer>
+    <span class="footer-tag">Scaler × Meta × PyTorch Hackathon — Round 1</span>
+    <span class="footer-tag">drug_discovery_openenv</span>
+  </footer>
+
+</div>
+</body>
+</html>
